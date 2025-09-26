@@ -4,10 +4,82 @@
   box-sizing: border-box;
 }
 
+:root {
+  /* Panda-Inspired Color Palette */
+  --panda-black: #1a1a1a;
+  --panda-dark: #2d2d2d;
+  --panda-medium: #4a4a4a;
+  --panda-light: #6b6b6b;
+  --panda-white: #ffffff;
+  --panda-cream: #fafafa;
+  --panda-gray: #f5f5f5;
+  --panda-silver: #e8e8e8;
+  
+  /* Bamboo Accents */
+  --bamboo-green: #7cb342;
+  --bamboo-light: #9ccc65;
+  --bamboo-dark: #689f38;
+  
+  /* Semantic Colors */
+  --text-primary: var(--panda-black);
+  --text-secondary: var(--panda-medium);
+  --text-tertiary: var(--panda-light);
+  --text-light: var(--panda-light);
+  
+  /* Backgrounds */
+  --bg-primary: var(--panda-white);
+  --bg-secondary: var(--panda-cream);
+  --bg-tertiary: var(--panda-gray);
+  --bg-accent: var(--bamboo-green);
+  
+  /* Borders */
+  --border-light: var(--panda-silver);
+  --border-medium: var(--panda-light);
+  --border-dark: var(--panda-medium);
+  
+  /* Interactive */
+  --accent: var(--bamboo-green);
+  --accent-light: var(--bamboo-light);
+  --accent-dark: var(--bamboo-dark);
+}
+
 body {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  color: #333;
-  background-color: #ffffff;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(124, 179, 66, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(26, 26, 26, 0.02) 0%, transparent 50%),
+    linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
   min-height: 100vh;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 2px,
+      rgba(26, 26, 26, 0.01) 2px,
+      rgba(26, 26, 26, 0.01) 4px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 2px,
+      rgba(124, 179, 66, 0.005) 2px,
+      rgba(124, 179, 66, 0.005) 4px
+    );
+  pointer-events: none;
+  z-index: -1;
 }
