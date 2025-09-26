@@ -1,0 +1,312 @@
+.header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 2px solid var(--panda-black);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 
+    0 8px 32px rgba(26, 26, 26, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(124, 179, 66, 0.02) 100%
+  );
+  pointer-events: none;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: #1f2937;
+}
+
+.logo-text {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+  position: relative;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.logo-text::after {
+  content: '✨';
+  position: absolute;
+  right: -20px;
+  top: -5px;
+  font-size: 0.8rem;
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% { 
+    opacity: 0.6; 
+    transform: scale(1) rotate(0deg); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: scale(1.2) rotate(180deg); 
+  }
+}
+
+/* Fufu Panda Logo - Super Cute & Adorable */
+.fufu-bear {
+  width: 48px;
+  height: 48px;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  animation: gentleBounce 3s ease-in-out infinite;
+}
+
+.fufu-bear:hover {
+  transform: scale(1.15) rotate(5deg);
+  animation-play-state: paused;
+}
+
+@keyframes gentleBounce {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+}
+
+.bear-head {
+  width: 38px;
+  height: 38px;
+  background: var(--panda-white);
+  border-radius: 50%;
+  position: relative;
+  margin: 5px auto;
+  border: 2px solid var(--panda-black);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(26, 26, 26, 0.15);
+  animation: headWiggle 4s ease-in-out infinite;
+}
+
+@keyframes headWiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+}
+
+.fufu-bear:hover .bear-head {
+  box-shadow: 0 6px 20px rgba(26, 26, 26, 0.2);
+  animation-play-state: paused;
+}
+
+/* Panda Ears - Cute and bouncy */
+.bear-ear {
+  width: 13px;
+  height: 13px;
+  background: var(--panda-black);
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  border: 1px solid var(--panda-black);
+  animation: earTwitch 2s ease-in-out infinite;
+}
+
+.bear-ear.left {
+  left: 2px;
+  animation-delay: 0s;
+}
+
+.bear-ear.right {
+  right: 2px;
+  animation-delay: 0.5s;
+}
+
+@keyframes earTwitch {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* Panda Eye Patches - Bigger and cuter */
+.bear-eye-patch {
+  width: 10px;
+  height: 8px;
+  background: var(--panda-black);
+  border-radius: 50%;
+  position: absolute;
+  top: 7px;
+  animation: blink 6s ease-in-out infinite;
+}
+
+.bear-eye-patch.left {
+  left: 5px;
+}
+
+.bear-eye-patch.right {
+  right: 5px;
+}
+
+@keyframes blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+/* Panda Eyes - Bigger and more expressive */
+.bear-eye {
+  width: 3px;
+  height: 3px;
+  background: var(--panda-white);
+  border-radius: 50%;
+  position: absolute;
+  top: 9px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.bear-eye.left {
+  left: 7px;
+}
+
+.bear-eye.right {
+  right: 7px;
+}
+
+/* Panda Nose - Cute and round */
+.bear-nose {
+  width: 5px;
+  height: 4px;
+  background: var(--panda-black);
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: noseTwitch 5s ease-in-out infinite;
+}
+
+@keyframes noseTwitch {
+  0%, 100% { transform: translateX(-50%) scale(1); }
+  50% { transform: translateX(-50%) scale(1.1); }
+}
+
+/* Panda Mouth - Cute smile */
+.bear-mouth {
+  width: 8px;
+  height: 4px;
+  border: 2px solid var(--panda-black);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  position: absolute;
+  top: 19px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: smileWiggle 3s ease-in-out infinite;
+}
+
+@keyframes smileWiggle {
+  0%, 100% { transform: translateX(-50%) scaleX(1); }
+  50% { transform: translateX(-50%) scaleX(1.2); }
+}
+
+.nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--panda-medium);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 0.5rem 0;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.nav-link:hover {
+  color: var(--panda-black);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--bamboo-green);
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--panda-black);
+  color: var(--panda-white);
+  border: 2px solid var(--panda-black);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  border-radius: 1rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover {
+  background: var(--bamboo-green);
+  border-color: var(--bamboo-green);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(124, 179, 66, 0.4);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
