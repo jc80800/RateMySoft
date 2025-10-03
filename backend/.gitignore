@@ -63,3 +63,12 @@ coverage.html
 
 # Air (live reload) temporary files
 tmp/
+
+# Compiled binaries
+main
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
