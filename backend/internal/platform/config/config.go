@@ -1,18 +1,35 @@
 package config
 
-// Config holds minimal configuration for our application
-type Config struct {
-	// Server configuration
-	ServerPort string
+import (
+	"log"
+	"os"
 
-	// Database configuration
+	"github.com/joho/godotenv"
+)
+
+type Config struct {
+	ServerPort  string
 	DatabaseURL string
 }
 
-// Load loads configuration with minimal defaults
+// Load loads configuration from .env file and environment variables
 func Load() *Config {
-	return &Config{
-		ServerPort:  "8080",
-		DatabaseURL: "postgres://user:password@localhost/ratemysoft?sslmode=disable",
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, using environment variables only")
 	}
+
+	serverPort := getEnv("SERVER_PORT", "8080")
+	databaseURL := getEnv("DATABASE_URL", "postgres://ratemysoft_user:ratemysoft_password@localhost:5432/ratemysoft?sslmode=disable")
+
+	return &Config{
+		ServerPort:  serverPort,
+		DatabaseURL: databaseURL,
+	}
+}
+
+func getEnv(key, defaultValue string) string {
+	if value := os.Getenv(key); value != "" {
+		return value
+	}
+	return defaultValue
 }
