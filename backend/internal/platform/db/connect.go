@@ -19,7 +19,7 @@ func NewDatabase(cfg *config.Config) (*pgxpool.Pool, *sqlc.Queries, error) {
 		return nil, nil, fmt.Errorf("failed to create connection pool: %w", err)
 	}
 
-	// Test the connection
+	// Test the connection with 5-second timeout
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 

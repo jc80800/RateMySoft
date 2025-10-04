@@ -1,27 +1,31 @@
 package main
 
 import (
-	"net/http"
+	"log"
+
+	"ratemysoft-backend/internal/platform/config"
+	"ratemysoft-backend/internal/platform/db"
+	"ratemysoft-backend/internal/transport/http"
+	"ratemysoft-backend/internal/transport/http/handlers"
+	"ratemysoft-backend/internal/utils"
 
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
-	// Create Echo instance
+	cfg := config.Load()
+
+	pool, queries, err := db.NewDatabase(cfg)
+	if err != nil {
+		log.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer pool.Close()
+
 	e := echo.New()
+	e.Validator = utils.NewValidator()
 
-	// Routes
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello from RateMySoft Backend!")
-	})
+	http.SetupRoutes(e, handlers.NewHandler(queries))
 
-	e.GET("/health", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, map[string]string{
-			"status":  "healthy",
-			"message": "Backend is running",
-		})
-	})
-
-	// Start server
-	e.Logger.Fatal(e.Start(":8080"))
+	log.Printf("Server starting on port %s", cfg.ServerPort)
+	e.Logger.Fatal(e.Start(":" + cfg.ServerPort))
 }
