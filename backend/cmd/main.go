@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"ratemysoft-backend/internal/auth"
 	"ratemysoft-backend/internal/platform/config"
 	"ratemysoft-backend/internal/platform/db"
 	"ratemysoft-backend/internal/transport/http"
@@ -21,11 +22,21 @@ func main() {
 	}
 	defer pool.Close()
 
+	// Initialize JWT service
+	jwtService := auth.NewJWTService(cfg.JWTSecret, cfg.JWTExpiryHours)
+
+	// Setup Echo server
 	e := echo.New()
 	e.Validator = utils.NewValidator()
 
-	http.SetupRoutes(e, handlers.NewHandler(queries))
+	// Initialize handlers with dependencies
+	handler := handlers.NewHandler(queries, jwtService)
 
+	// Setup routes
+	http.SetupRoutes(e, handler, jwtService)
+
+	// Start server
 	log.Printf("Server starting on port %s", cfg.ServerPort)
+	log.Printf("JWT expiry: %d hours", cfg.JWTExpiryHours)
 	e.Logger.Fatal(e.Start(":" + cfg.ServerPort))
 }
