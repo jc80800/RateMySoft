@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"ratemysoft-backend/internal/auth"
 	"ratemysoft-backend/internal/models/sqlc"
 	"ratemysoft-backend/internal/services"
 
@@ -15,12 +16,14 @@ import (
 type Handler struct {
 	queries     *sqlc.Queries
 	userService *services.UserService
+	jwtService  *auth.JWTService
 }
 
-func NewHandler(queries *sqlc.Queries) *Handler {
+func NewHandler(queries *sqlc.Queries, jwtService *auth.JWTService) *Handler {
 	return &Handler{
 		queries:     queries,
 		userService: services.NewUserService(queries),
+		jwtService:  jwtService,
 	}
 }
 

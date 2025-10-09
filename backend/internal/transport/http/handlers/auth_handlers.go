@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"ratemysoft-backend/internal/auth"
 	"ratemysoft-backend/internal/services"
 	"ratemysoft-backend/internal/transport/http/dto"
 
@@ -47,8 +48,13 @@ func (h *Handler) Login(c echo.Context) error {
 		})
 	}
 
-	// Generate simple token for now (we'll implement proper JWT later)
-	token := "simple_token_" + user.ID.String()
+	// Generate JWT token
+	token, err := h.jwtService.GenerateToken(user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": "Failed to generate authentication token",
+		})
+	}
 
 	return c.JSON(http.StatusOK, dto.AuthResponse{
 		Token: token,
@@ -100,8 +106,13 @@ func (h *Handler) Register(c echo.Context) error {
 		})
 	}
 
-	// Generate simple token for now (we'll implement proper JWT later)
-	token := "simple_token_" + user.ID.String()
+	// Generate JWT token
+	token, err := h.jwtService.GenerateToken(user)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": "Failed to generate authentication token",
+		})
+	}
 
 	return c.JSON(http.StatusCreated, dto.AuthResponse{
 		Token: token,
@@ -111,5 +122,27 @@ func (h *Handler) Register(c echo.Context) error {
 			Handle: user.Handle,
 			Role:   string(user.Role),
 		},
+	})
+}
+
+// GetProfile returns the authenticated user's profile information
+func (h *Handler) GetProfile(c echo.Context) error {
+	// User info is already in context from AuthMiddleware
+	userID, err := auth.GetUserIDFromContext(c)
+	if err != nil {
+		return c.JSON(http.StatusUnauthorized, map[string]string{
+			"error": "User not authenticated",
+		})
+	}
+
+	email, _ := auth.GetUserEmailFromContext(c)
+	handle, _ := auth.GetUserHandleFromContext(c)
+	role, _ := auth.GetUserRoleFromContext(c)
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"id":     userID.String(),
+		"email":  email,
+		"handle": handle,
+		"role":   role,
 	})
 }
