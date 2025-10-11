@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './Header.css';
 
 const Header = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -29,7 +36,26 @@ const Header = () => {
         </nav>
         
         <div className="header-actions">
-          <button className="btn btn-primary">Sign In</button>
+          {isAuthenticated ? (
+            <>
+              <Link to="/profile" className="btn btn-profile">
+                <span className="profile-username">{user?.handle}</span>
+                <span className="profile-icon">{user?.handle?.charAt(0).toUpperCase()}</span>
+              </Link>
+              <button className="btn btn-logout" onClick={handleLogout}>
+                Log Out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-secondary">
+                Sign In
+              </Link>
+              <Link to="/register" className="btn btn-primary">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

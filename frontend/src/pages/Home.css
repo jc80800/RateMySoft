@@ -329,6 +329,26 @@
   font-size: 1.125rem;
 }
 
+/* Empty State */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--panda-medium);
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--panda-black);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

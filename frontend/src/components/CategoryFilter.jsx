@@ -1,63 +1,19 @@
 import { useState } from 'react';
 import './CategoryFilter.css';
 
-const CategoryFilter = ({ onCategorySelect, selectedCategory }) => {
-  const categories = [
+const CategoryFilter = ({ onCategorySelect, selectedCategory, categories = [] }) => {
+  // Default "All Software" category
+  const defaultCategories = [
     {
       id: 'all',
       name: 'All Software',
       icon: '🔍',
       description: 'Browse all software'
-    },
-    {
-      id: 'deployment',
-      name: 'Deployment',
-      icon: '🚀',
-      description: 'Deploy and host applications'
-    },
-    {
-      id: 'database',
-      name: 'Database',
-      icon: '🗄️',
-      description: 'Store and manage data'
-    },
-    {
-      id: 'feature-toggles',
-      name: 'Feature Toggles',
-      icon: '🎛️',
-      description: 'Control feature rollouts'
-    },
-    {
-      id: 'monitoring',
-      name: 'Monitoring',
-      icon: '📊',
-      description: 'Track performance and usage'
-    },
-    {
-      id: 'authentication',
-      name: 'Authentication',
-      icon: '🔐',
-      description: 'Secure user access'
-    },
-    {
-      id: 'cdn',
-      name: 'CDN',
-      icon: '⚡',
-      description: 'Speed up content delivery'
-    },
-    {
-      id: 'email',
-      name: 'Email',
-      icon: '📧',
-      description: 'Send transactional emails'
-    },
-    {
-      id: 'storage',
-      name: 'Storage',
-      icon: '📁',
-      description: 'Store and serve files'
     }
   ];
+  
+  // Combine default with dynamic categories from props
+  const allCategories = [...defaultCategories, ...categories];
 
   return (
     <div className="category-filter">
@@ -67,7 +23,7 @@ const CategoryFilter = ({ onCategorySelect, selectedCategory }) => {
       </div>
       
       <div className="filter-tabs">
-        {categories.map((category) => (
+        {allCategories.map((category) => (
           <button
             key={category.id}
             className={`filter-tab ${selectedCategory === category.id ? 'active' : ''}`}
