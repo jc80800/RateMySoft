@@ -14,16 +14,22 @@ import (
 
 // Handler holds dependencies for HTTP handlers
 type Handler struct {
-	queries     *sqlc.Queries
-	userService *services.UserService
-	jwtService  *auth.JWTService
+	queries        *sqlc.Queries
+	userService    *services.UserService
+	companyService *services.CompanyService
+	productService *services.ProductService
+	reviewService  *services.ReviewService
+	jwtService     *auth.JWTService
 }
 
 func NewHandler(queries *sqlc.Queries, jwtService *auth.JWTService) *Handler {
 	return &Handler{
-		queries:     queries,
-		userService: services.NewUserService(queries),
-		jwtService:  jwtService,
+		queries:        queries,
+		userService:    services.NewUserService(queries),
+		companyService: services.NewCompanyService(queries),
+		productService: services.NewProductService(queries),
+		reviewService:  services.NewReviewService(queries),
+		jwtService:     jwtService,
 	}
 }
 

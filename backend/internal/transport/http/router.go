@@ -37,23 +37,43 @@ func SetupRoutes(e *echo.Echo, h *handlers.Handler, jwtService *auth.JWTService)
 	// authProtected.POST("/logout", h.Logout)
 	// authProtected.PUT("/profile", h.UpdateProfile)
 
+	// Company routes - mixed public and protected
+	companies := v1.Group("/companies")
+	companies.GET("", h.ListCompanies)               // Public
+	companies.GET("/search", h.SearchCompanies)      // Public
+	companies.GET("/:id", h.GetCompany)              // Public
+	companies.GET("/slug/:slug", h.GetCompanyBySlug) // Public
+
+	// Protected company routes (require auth)
+	companies.POST("", h.CreateCompany, middleware.AuthMiddleware(jwtService))
+	companies.PUT("/:id", h.UpdateCompany, middleware.AuthMiddleware(jwtService))
+	companies.DELETE("/:id", h.DeleteCompany, middleware.AuthMiddleware(jwtService))
+
 	// Product routes - mixed public and protected
-	// products := v1.Group("/products")
-	// products.GET("", h.ListProducts)   // Public
-	// products.GET("/:id", h.GetProduct) // Public
+	products := v1.Group("/products")
+	products.GET("", h.ListProducts)                              // Public
+	products.GET("/search", h.SearchProducts)                     // Public
+	products.GET("/category/:category", h.ListProductsByCategory) // Public
+	products.GET("/company/:companyId", h.GetProductsByCompany)   // Public
+	products.GET("/:id", h.GetProduct)                            // Public
+	products.GET("/slug/:slug", h.GetProductBySlug)               // Public
 
 	// Protected product routes (require auth)
-	// products.POST("", h.CreateProduct, middleware.AuthMiddleware(jwtService))
-	// products.PUT("/:id", h.UpdateProduct, middleware.AuthMiddleware(jwtService))
-	// products.DELETE("/:id", h.DeleteProduct, middleware.AuthMiddleware(jwtService))
+	products.POST("", h.CreateProduct, middleware.AuthMiddleware(jwtService))
+	products.PUT("/:id", h.UpdateProduct, middleware.AuthMiddleware(jwtService))
+	products.DELETE("/:id", h.DeleteProduct, middleware.AuthMiddleware(jwtService))
 
 	// Review routes - mixed public and protected
-	// reviews := v1.Group("/reviews")
-	// reviews.GET("/product/:productId", h.ListReviews) // Public
-	// reviews.GET("/:id", h.GetReview)                  // Public
+	reviews := v1.Group("/reviews")
+	reviews.GET("/product/:productId", h.GetReviewsByProduct) // Public
+	reviews.GET("/user/:userId", h.GetReviewsByUser)          // Public
+	reviews.GET("/:id", h.GetReview)                          // Public
 
 	// Protected review routes (require auth)
-	// reviews.POST("", h.CreateReview, middleware.AuthMiddleware(jwtService))
-	// reviews.PUT("/:id", h.UpdateReview, middleware.AuthMiddleware(jwtService))
-	// reviews.DELETE("/:id", h.DeleteReview, middleware.AuthMiddleware(jwtService))
+	reviews.POST("", h.CreateReview, middleware.AuthMiddleware(jwtService))
+	reviews.PUT("/:id", h.UpdateReview, middleware.AuthMiddleware(jwtService))
+	reviews.DELETE("/:id", h.DeleteReview, middleware.AuthMiddleware(jwtService))
+	reviews.POST("/:id/upvote", h.UpvoteReview, middleware.AuthMiddleware(jwtService))
+	reviews.POST("/:id/downvote", h.DownvoteReview, middleware.AuthMiddleware(jwtService))
+	reviews.POST("/:id/flag", h.FlagReview, middleware.AuthMiddleware(jwtService))
 }
