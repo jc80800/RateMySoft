@@ -6,75 +6,8 @@ import './Home.css';
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  // Mock data for featured software
-  const featuredSoftware = [
-    {
-      id: 1,
-      name: 'Vercel',
-      category: 'deployment',
-      categoryName: 'Deployment & Hosting',
-      description: 'The platform for frontend developers. Deploy your projects with zero configuration.',
-      rating: 4.8,
-      reviewCount: 1247,
-      pricing: 'Free - $20/mo',
-      logo: null
-    },
-    {
-      id: 2,
-      name: 'PostgreSQL',
-      category: 'database',
-      categoryName: 'Database',
-      description: 'The world\'s most advanced open source relational database.',
-      rating: 4.7,
-      reviewCount: 892,
-      pricing: 'Free',
-      logo: null
-    },
-    {
-      id: 3,
-      name: 'LaunchDarkly',
-      category: 'feature-toggles',
-      categoryName: 'Feature Toggles',
-      description: 'Feature flags as a service. Build better software faster.',
-      rating: 4.5,
-      reviewCount: 456,
-      pricing: '$10/mo',
-      logo: null
-    },
-    {
-      id: 4,
-      name: 'DataDog',
-      category: 'monitoring',
-      categoryName: 'Monitoring & Analytics',
-      description: 'Cloud monitoring and security platform for modern applications.',
-      rating: 4.4,
-      reviewCount: 673,
-      pricing: '$15/mo',
-      logo: null
-    },
-    {
-      id: 5,
-      name: 'Auth0',
-      category: 'authentication',
-      categoryName: 'Authentication',
-      description: 'Secure access for everyone. But not just anyone.',
-      rating: 4.6,
-      reviewCount: 789,
-      pricing: '$23/mo',
-      logo: null
-    },
-    {
-      id: 6,
-      name: 'Cloudflare',
-      category: 'cdn',
-      categoryName: 'CDN & Performance',
-      description: 'The web performance and security company.',
-      rating: 4.7,
-      reviewCount: 1023,
-      pricing: 'Free - $20/mo',
-      logo: null
-    }
-  ];
+  // Featured software data will be loaded from API
+  const [featuredSoftware, setFeaturedSoftware] = useState([]);
 
   // Filter software based on selected category
   const filteredSoftware = selectedCategory === 'all' 
@@ -128,19 +61,20 @@ const Home = () => {
           </div>
           
           <div className="software-grid">
-            {filteredSoftware.map((software) => (
-              <SoftwareCard key={software.id} software={{
-                ...software,
-                category: software.categoryName
-              }} />
-            ))}
+            {filteredSoftware.length > 0 ? (
+              filteredSoftware.map((software) => (
+                <SoftwareCard key={software.id} software={{
+                  ...software,
+                  category: software.categoryName
+                }} />
+              ))
+            ) : (
+              <div className="empty-state">
+                <h3>No featured software available</h3>
+                <p>Check back later for featured software recommendations</p>
+              </div>
+            )}
           </div>
-          
-          {filteredSoftware.length === 0 && (
-            <div className="no-results">
-              <p>No software found in this category yet.</p>
-            </div>
-          )}
         </div>
       </section>
 

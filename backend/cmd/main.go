@@ -8,6 +8,7 @@ import (
 	"ratemysoft-backend/internal/platform/db"
 	"ratemysoft-backend/internal/transport/http"
 	"ratemysoft-backend/internal/transport/http/handlers"
+	"ratemysoft-backend/internal/transport/http/middleware"
 	"ratemysoft-backend/internal/utils"
 
 	"github.com/labstack/echo/v4"
@@ -28,6 +29,14 @@ func main() {
 	// Setup Echo server
 	e := echo.New()
 	e.Validator = utils.NewValidator()
+
+	// TODO: Set environment from config when you add environment configuration
+	productionOrigins := []string{
+		// Add your production domains here:
+		// "https://yourdomain.com",
+		// "https://www.yourdomain.com",
+	}
+	e.Use(middleware.CORSWithEnvironment("development", productionOrigins))
 
 	// Initialize handlers with dependencies
 	handler := handlers.NewHandler(queries, jwtService)
