@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SoftwareCard from '../components/SoftwareCard';
+import apiService from '../services/api';
 import './SoftwareList.css';
 
 const SoftwareList = () => {
@@ -7,11 +8,52 @@ const SoftwareList = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
 
-  // Software data will be loaded from API
+  // Software data loaded from API
   const [allSoftware, setAllSoftware] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Categories will be loaded from API
+  // Categories loaded from API
   const [categories, setCategories] = useState(['all']);
+
+  // Category display mapping
+  const getCategoryDisplayName = (category) => {
+    const categoryMap = {
+      'all': 'All Categories',
+      'hosting': 'Web Hosting',
+      'feature_toggles': 'Feature Management',
+      'ci_cd': 'CI/CD & DevOps',
+      'observability': 'Monitoring & Analytics',
+      'other': 'Other Tools'
+    };
+    return categoryMap[category] || category;
+  };
+
+  // Load products and categories on component mount
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Load all products
+        const products = await apiService.getProducts();
+        setAllSoftware(products);
+        
+        // Extract unique categories from products
+        const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
+        setCategories(['all', ...uniqueCategories]);
+        
+      } catch (err) {
+        console.error('Failed to load software data:', err);
+        setError('Failed to load software data. Please try again later.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const filteredSoftware = allSoftware.filter(software => {
     const matchesSearch = software.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -61,7 +103,7 @@ const SoftwareList = () => {
             >
               {categories.map(category => (
                 <option key={category} value={category}>
-                  {category === 'all' ? 'All Categories' : category}
+                  {getCategoryDisplayName(category)}
                 </option>
               ))}
             </select>
@@ -83,18 +125,43 @@ const SoftwareList = () => {
           <p>{sortedSoftware.length} software found</p>
         </div>
 
-      <div className="software-grid">
-        {sortedSoftware.length > 0 ? (
-          sortedSoftware.map((software) => (
-            <SoftwareCard key={software.id} software={software} />
-          ))
-        ) : (
-          <div className="empty-state">
-            <h3>No software found</h3>
-            <p>Try adjusting your search or category filter</p>
+        {/* Loading State */}
+        {loading && (
+          <div className="loading-state">
+            <div className="loading-spinner"></div>
+            <p>Loading software...</p>
           </div>
         )}
-      </div>
+
+        {/* Error State */}
+        {error && (
+          <div className="error-state">
+            <h3>Error</h3>
+            <p>{error}</p>
+            <button 
+              className="btn btn-primary"
+              onClick={() => window.location.reload()}
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+
+        {/* Software Grid */}
+        {!loading && !error && (
+          <div className="software-grid">
+            {sortedSoftware.length > 0 ? (
+              sortedSoftware.map((software) => (
+                <SoftwareCard key={software.id} software={software} />
+              ))
+            ) : (
+              <div className="empty-state">
+                <h3>No software found</h3>
+                <p>Try adjusting your search or category filter</p>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

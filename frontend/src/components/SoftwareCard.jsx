@@ -2,7 +2,41 @@ import { Link } from 'react-router-dom';
 import './SoftwareCard.css';
 
 const SoftwareCard = ({ software }) => {
-  const { id, name, category, description, rating, reviewCount, logo, pricing } = software;
+  // Map backend data structure to component props
+  const { 
+    id, 
+    name, 
+    category, 
+    description, 
+    short_tagline,
+    avg_rating, 
+    total_reviews,
+    homepage_url 
+  } = software;
+  
+  // Use avg_rating if available, otherwise default to 0
+  const rating = avg_rating || 0;
+  const reviewCount = total_reviews || 0;
+  
+  // Use short_tagline as description if description is empty
+  const displayDescription = description || short_tagline || 'No description available';
+  
+  // Category display mapping
+  const getCategoryDisplayName = (category) => {
+    const categoryMap = {
+      'all': 'All Categories',
+      'hosting': 'Web Hosting',
+      'feature_toggles': 'Feature Management',
+      'ci_cd': 'CI/CD & DevOps',
+      'observability': 'Monitoring & Analytics',
+      'other': 'Other Tools'
+    };
+    return categoryMap[category] || category;
+  };
+  
+  // For now, we don't have logo or pricing data from backend
+  const logo = null;
+  const pricing = 'Contact for pricing';
 
   const renderStars = (rating) => {
     const stars = [];
@@ -39,11 +73,11 @@ const SoftwareCard = ({ software }) => {
         </div>
         <div className="software-info">
           <h3 className="software-name">{name}</h3>
-          <span className="software-category">{category}</span>
+          <span className="software-category">{getCategoryDisplayName(category)}</span>
         </div>
       </div>
 
-      <p className="software-description">{description}</p>
+      <p className="software-description">{displayDescription}</p>
 
       <div className="card-footer">
         <div className="rating-section">
@@ -52,10 +86,6 @@ const SoftwareCard = ({ software }) => {
           </div>
           <span className="rating-number">{rating.toFixed(1)}</span>
           <span className="review-count">({reviewCount} reviews)</span>
-        </div>
-
-        <div className="pricing">
-          <span className="price">{pricing}</span>
         </div>
       </div>
 

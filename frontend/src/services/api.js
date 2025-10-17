@@ -92,7 +92,9 @@ class ApiService {
   async getProducts(params = {}) {
     const queryString = new URLSearchParams(params).toString();
     const endpoint = queryString ? `/products?${queryString}` : '/products';
-    return this.request(endpoint);
+    const response = await this.request(endpoint);
+    // Backend returns paginated response with products array
+    return response.products || response;
   }
 
   async getProduct(id) {
@@ -104,15 +106,21 @@ class ApiService {
   }
 
   async searchProducts(query) {
-    return this.request(`/products/search?q=${encodeURIComponent(query)}`);
+    const response = await this.request(`/products/search?q=${encodeURIComponent(query)}`);
+    // Backend returns paginated response with products array
+    return response.products || response;
   }
 
   async getProductsByCategory(category) {
-    return this.request(`/products/category/${category}`);
+    const response = await this.request(`/products/category/${category}`);
+    // Backend returns paginated response with products array
+    return response.products || response;
   }
 
   async getProductsByCompany(companyId) {
-    return this.request(`/products/company/${companyId}`);
+    const response = await this.request(`/products/company/${companyId}`);
+    // Backend returns paginated response with products array
+    return response.products || response;
   }
 
   async createProduct(productData) {
