@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
 import Home from './pages/Home';
 import SoftwareList from './pages/SoftwareList';
+import AddSolution from './pages/AddSolution';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
@@ -20,8 +21,14 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/software" element={<SoftwareList />} />
-              <Route path="/categories" element={<SoftwareList />} />
-              <Route path="/reviews" element={<SoftwareList />} />
+              <Route 
+                path="/add-solution" 
+                element={
+                  <ProtectedRoute>
+                    <AddSolution />
+                  </ProtectedRoute>
+                } 
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route 

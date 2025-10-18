@@ -48,19 +48,31 @@ type UpdateProductRequest struct {
 
 // CreateProduct creates a new product
 func (s *ProductService) CreateProduct(ctx context.Context, req CreateProductRequest) (*domain.Product, error) {
-	// Validate company ID
-	companyID, err := uuid.Parse(req.CompanyID)
-	if err != nil {
-		return nil, fmt.Errorf("invalid company ID format: %w", err)
-	}
+	var companyID uuid.UUID
+	var err error
 
-	// Check if company exists
-	_, err = s.queries.GetCompany(ctx, companyID)
-	if err != nil {
-		if errors.Is(err, pgx.ErrNoRows) {
-			return nil, fmt.Errorf("company not found")
+	// Handle company ID - if not provided, use or create a default company
+	if req.CompanyID == "" {
+		// Use or create a default company for products without a specific company
+		companyID, err = s.getOrCreateDefaultCompany(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("failed to get or create default company: %w", err)
 		}
-		return nil, fmt.Errorf("failed to check company: %w", err)
+	} else {
+		// Validate provided company ID
+		companyID, err = uuid.Parse(req.CompanyID)
+		if err != nil {
+			return nil, fmt.Errorf("invalid company ID format: %w", err)
+		}
+
+		// Check if company exists
+		_, err = s.queries.GetCompany(ctx, companyID)
+		if err != nil {
+			if errors.Is(err, pgx.ErrNoRows) {
+				return nil, fmt.Errorf("company not found")
+			}
+			return nil, fmt.Errorf("failed to check company: %w", err)
+		}
 	}
 
 	// Validate slug format
@@ -370,6 +382,44 @@ func (s *ProductService) CountProductsByCompany(ctx context.Context, companyID s
 }
 
 // Helper functions
+
+// getOrCreateDefaultCompany returns the ID of a default company for products without a specific company
+func (s *ProductService) getOrCreateDefaultCompany(ctx context.Context) (uuid.UUID, error) {
+	// Try to find existing default company by slug
+	defaultCompanySlug := "independent"
+	existingCompany, err := s.queries.GetCompanyBySlug(ctx, defaultCompanySlug)
+	if err == nil {
+		// Default company exists, return its ID
+		return existingCompany.ID, nil
+	}
+
+	if !errors.Is(err, pgx.ErrNoRows) {
+		// Some other error occurred
+		return uuid.Nil, fmt.Errorf("failed to check for default company: %w", err)
+	}
+
+	// Default company doesn't exist, create it
+	companyID := uuid.New()
+	now := pgtype.Timestamptz{
+		Time:  time.Now().UTC(),
+		Valid: true,
+	}
+
+	_, err = s.queries.CreateCompany(ctx, sqlc.CreateCompanyParams{
+		ID:        companyID,
+		Name:      "Independent",
+		Website:   nil,
+		Slug:      defaultCompanySlug,
+		LogoUrl:   nil,
+		CreatedAt: now,
+		UpdatedAt: now,
+	})
+	if err != nil {
+		return uuid.Nil, fmt.Errorf("failed to create default company: %w", err)
+	}
+
+	return companyID, nil
+}
 
 func isValidCategory(cat domain.ProductCategory) bool {
 	switch cat {

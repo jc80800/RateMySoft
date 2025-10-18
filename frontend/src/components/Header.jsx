@@ -31,8 +31,7 @@ const Header = () => {
         <nav className="nav">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/software" className="nav-link">Software</Link>
-          <Link to="/categories" className="nav-link">Categories</Link>
-          <Link to="/reviews" className="nav-link">Reviews</Link>
+          <Link to="/add-solution" className="nav-link">Add Solution</Link>
         </nav>
         
         <div className="header-actions">

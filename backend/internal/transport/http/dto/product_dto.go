@@ -4,7 +4,7 @@ import "time"
 
 // CreateProductRequest represents the request body for creating a product
 type CreateProductRequest struct {
-	CompanyID    string `json:"company_id" validate:"required,uuid"`
+	CompanyID    string `json:"company_id" validate:"omitempty,uuid"`
 	Name         string `json:"name" validate:"required,min=1,max=200"`
 	Slug         string `json:"slug" validate:"required,min=1,max=100"`
 	Category     string `json:"category" validate:"required,oneof=hosting feature_toggles ci_cd observability other"`
