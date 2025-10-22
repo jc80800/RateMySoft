@@ -1,0 +1,432 @@
+/* Company Card Styles */
+.company-card {
+  position: relative;
+  background: var(--bg-primary);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  height: fit-content;
+  border: 1px solid var(--border-light);
+}
+
+.company-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Background Gradient */
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  opacity: 0.05;
+  z-index: 1;
+}
+
+/* Card Content */
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  padding-top: 2.5rem; /* Add more top padding to avoid logo overlap */
+  background: var(--bg-primary);
+  margin-top: 50px;
+  border-radius: 0.75rem 0.75rem 0 0;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Company Logo */
+.company-logo {
+  position: absolute;
+  top: -35px;
+  left: 1.5rem;
+  z-index: 3;
+}
+
+.company-logo img {
+  width: 70px;
+  height: 70px;
+  border-radius: 0.75rem;
+  object-fit: cover;
+  border: 3px solid var(--bg-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-placeholder {
+  width: 70px;
+  height: 70px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--bg-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: var(--panda-white);
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+/* Panda Logo for Company Cards */
+.company-card .panda-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-card .panda-head {
+  width: 50px;
+  height: 50px;
+  background: var(--panda-white);
+  border-radius: 50%;
+  position: relative;
+  border: 2px solid var(--panda-black);
+  box-shadow: 0 2px 8px rgba(26, 26, 26, 0.15);
+}
+
+.company-card .panda-ear {
+  width: 12px;
+  height: 12px;
+  background: var(--panda-black);
+  border-radius: 50%;
+  position: absolute;
+  top: -2px;
+  border: 1px solid var(--panda-black);
+}
+
+.company-card .panda-ear.left {
+  left: 2px;
+}
+
+.company-card .panda-ear.right {
+  right: 2px;
+}
+
+.company-card .panda-eye-patch {
+  width: 8px;
+  height: 6px;
+  background: var(--panda-black);
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+}
+
+.company-card .panda-eye-patch.left {
+  left: 6px;
+}
+
+.company-card .panda-eye-patch.right {
+  right: 6px;
+}
+
+.company-card .panda-eye {
+  width: 2px;
+  height: 2px;
+  background: var(--panda-white);
+  border-radius: 50%;
+  position: absolute;
+  top: 10px;
+}
+
+.company-card .panda-eye.left {
+  left: 8px;
+}
+
+.company-card .panda-eye.right {
+  right: 8px;
+}
+
+.company-card .panda-nose {
+  width: 4px;
+  height: 3px;
+  background: var(--panda-black);
+  border-radius: 50%;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.company-card .panda-mouth {
+  width: 6px;
+  height: 3px;
+  border: 1px solid var(--panda-black);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Company Info */
+.company-info {
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.company-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.company-slug {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.company-website {
+  margin-bottom: 0.5rem;
+}
+
+.website-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+.website-link:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+.website-placeholder {
+  color: var(--text-tertiary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Company Stats - Removed since we're not using mock data */
+
+/* Company Meta */
+.company-meta {
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.meta-item:last-child {
+  margin-bottom: 0;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.meta-value {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Card Actions */
+.company-card .card-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.company-card .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+}
+
+.company-card .btn-sm {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  min-width: 80px;
+}
+
+.company-card .btn-outline {
+  background: transparent;
+  color: var(--panda-black);
+  border: 2px solid var(--panda-black);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+}
+
+.company-card .btn-outline:hover {
+  background: var(--panda-black);
+  color: var(--panda-white);
+  border-color: var(--panda-black);
+  transform: translateY(-1px);
+}
+
+.company-card .btn-primary {
+  background: var(--panda-black);
+  color: var(--panda-white);
+  border: 2px solid var(--panda-black);
+  border-radius: 0.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: all 0.3s ease;
+}
+
+.company-card .btn-primary:hover {
+  background: var(--bamboo-green);
+  border-color: var(--bamboo-green);
+  transform: translateY(-1px);
+}
+
+/* Decorative Elements */
+.card-decoration {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.decoration-circle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--company-color, var(--accent));
+  opacity: 0.05;
+}
+
+.decoration-line {
+  position: absolute;
+  top: 40px;
+  right: 8px;
+  width: 60px;
+  height: 1px;
+  background: var(--company-color, var(--accent));
+  opacity: 0.1;
+  transform: rotate(45deg);
+}
+
+/* Grid Layout Specific Styles */
+.company-card.grid {
+  height: auto;
+  min-height: 400px;
+}
+
+.company-card.grid .card-content {
+  margin-top: 50px;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.company-card.grid .company-info {
+  flex: 1;
+}
+
+/* Masonry Layout Specific Styles */
+.company-card.masonry {
+  height: auto;
+  min-height: 350px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .company-card .card-content {
+    padding: 1rem;
+    padding-top: 2rem; /* Add more top padding on mobile */
+    margin-top: 50px;
+    min-height: 280px;
+  }
+  
+  .company-card .company-logo {
+    top: -35px;
+    left: 1rem;
+  }
+  
+  .company-card .company-logo img,
+  .company-card .logo-placeholder {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .company-card .company-name {
+    font-size: 1.2rem;
+  }
+  
+  .company-card .card-actions {
+    flex-direction: column;
+  }
+  
+  .company-card .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-card .card-content {
+    padding: 0.75rem;
+    padding-top: 1.75rem; /* Add more top padding on small mobile */
+    margin-top: 45px;
+    min-height: 260px;
+  }
+  
+  .company-card .company-logo {
+    top: -30px;
+    left: 0.75rem;
+  }
+  
+  .company-card .company-logo img,
+  .company-card .logo-placeholder {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .company-card .company-name {
+    font-size: 1.1rem;
+  }
+}
