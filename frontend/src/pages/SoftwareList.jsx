@@ -1,12 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import SoftwareCard from '../components/SoftwareCard';
-import ReviewForm from '../components/ReviewForm';
 import apiService from '../services/api';
 import './SoftwareList.css';
 
 const SoftwareList = () => {
-  const { isAuthenticated } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
@@ -18,56 +15,6 @@ const SoftwareList = () => {
 
   // Categories loaded from API
   const [categories, setCategories] = useState(['all']);
-
-  // Review form modal state
-  const [showReviewForm, setShowReviewForm] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  // Handle review submission - refresh data
-  const handleReviewSubmitted = () => {
-    // Reload software data to get updated ratings and review counts
-    const loadData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        // Load all products
-        const products = await apiService.getProducts();
-        setAllSoftware(products);
-        
-        // Extract unique categories from products
-        const uniqueCategories = [...new Set(products.map(p => p.category).filter(Boolean))];
-        setCategories(['all', ...uniqueCategories]);
-        
-      } catch (err) {
-        console.error('Failed to reload software data:', err);
-        setError('Failed to reload software data. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  };
-
-  // Handle write review button click
-  const handleWriteReview = (product) => {
-    setSelectedProduct(product);
-    setShowReviewForm(true);
-  };
-
-  // Handle review form close
-  const handleCloseReviewForm = () => {
-    setShowReviewForm(false);
-    setSelectedProduct(null);
-  };
-
-  // Handle review form success
-  const handleReviewFormSuccess = () => {
-    setShowReviewForm(false);
-    setSelectedProduct(null);
-    handleReviewSubmitted();
-  };
 
   // Category display mapping
   const getCategoryDisplayName = (category) => {
@@ -107,23 +54,6 @@ const SoftwareList = () => {
 
     loadData();
   }, []);
-
-  // Check for pending review data when user returns from login
-  useEffect(() => {
-    if (isAuthenticated) {
-      const pendingReview = sessionStorage.getItem('pendingReview');
-      if (pendingReview) {
-        try {
-          const { product } = JSON.parse(pendingReview);
-          setSelectedProduct(product);
-          setShowReviewForm(true);
-        } catch (error) {
-          console.error('Failed to restore pending review:', error);
-          sessionStorage.removeItem('pendingReview');
-        }
-      }
-    }
-  }, [isAuthenticated]);
 
   const filteredSoftware = allSoftware.filter(software => {
     const matchesSearch = software.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -222,11 +152,7 @@ const SoftwareList = () => {
           <div className="software-grid">
             {sortedSoftware.length > 0 ? (
               sortedSoftware.map((software) => (
-                <SoftwareCard 
-                  key={software.id} 
-                  software={software} 
-                  onWriteReview={handleWriteReview}
-                />
+                <SoftwareCard key={software.id} software={software} />
               ))
             ) : (
               <div className="empty-state">
@@ -235,15 +161,6 @@ const SoftwareList = () => {
               </div>
             )}
           </div>
-        )}
-
-        {/* Review Form Modal */}
-        {showReviewForm && selectedProduct && (
-          <ReviewForm
-            product={selectedProduct}
-            onClose={handleCloseReviewForm}
-            onSuccess={handleReviewFormSuccess}
-          />
         )}
       </div>
     </div>

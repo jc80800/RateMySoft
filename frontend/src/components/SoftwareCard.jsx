@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './SoftwareCard.css';
 
-const SoftwareCard = ({ software, onWriteReview }) => {
+const SoftwareCard = ({ software }) => {
   // Map backend data structure to component props
   const { 
     id, 
@@ -59,12 +59,6 @@ const SoftwareCard = ({ software, onWriteReview }) => {
     return stars;
   };
 
-  const handleWriteReview = () => {
-    if (onWriteReview) {
-      onWriteReview(software);
-    }
-  };
-
   return (
     <div className="software-card">
       <div className="card-header">
@@ -99,7 +93,7 @@ const SoftwareCard = ({ software, onWriteReview }) => {
         <Link to={`/software/${id}`} className="btn btn-outline">
           View Details
         </Link>
-        <button className="btn btn-primary" onClick={handleWriteReview}>
+        <button className="btn btn-primary">
           Write Review
         </button>
       </div>
