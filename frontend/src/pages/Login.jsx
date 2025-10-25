@@ -12,8 +12,26 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get the intended destination from navigation state, default to home
-  const from = location.state?.from?.pathname || '/';
+  // Get the intended destination from navigation state or sessionStorage, default to home
+  const getRedirectUrl = () => {
+    // First check sessionStorage for pendingReview
+    const pendingReview = sessionStorage.getItem('pendingReview');
+    if (pendingReview) {
+      try {
+        const parsed = JSON.parse(pendingReview);
+        if (parsed.redirectUrl) {
+          return parsed.redirectUrl;
+        }
+      } catch (e) {
+        console.error('Failed to parse pendingReview:', e);
+      }
+    }
+    
+    // Fallback to navigation state
+    return location.state?.from?.pathname || '/';
+  };
+  
+  const from = getRedirectUrl();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,6 +41,12 @@ const Login = () => {
     const result = await login(email, password);
     
     if (result.success) {
+      // Clear pendingReview from sessionStorage if it exists
+      const pendingReview = sessionStorage.getItem('pendingReview');
+      if (pendingReview) {
+        sessionStorage.removeItem('pendingReview');
+      }
+      
       // Redirect to the intended destination or home page
       navigate(from, { replace: true });
     } else {
