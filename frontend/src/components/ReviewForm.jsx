@@ -175,7 +175,7 @@ const ReviewForm = ({ product, onClose, onSuccess }) => {
 
   return (
     <div className="review-form-overlay">
-      <div className="review-form-container">
+      <div className="review-form-container review-form">
         <div className="review-form-header">
           <h2>🐼 Write a Review</h2>
           <p className="product-name">for {product.name}</p>

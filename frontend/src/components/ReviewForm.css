@@ -141,14 +141,14 @@
   text-align: right;
 }
 
-.rating-input {
+.review-form .rating-input {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   flex-wrap: wrap;
 }
 
-.star {
+.review-form .star {
   background: none;
   border: none;
   font-size: 2rem;
@@ -158,20 +158,20 @@
   border-radius: 0.25rem;
 }
 
-.star.filled {
+.review-form .star.filled {
   color: #fbbf24;
   text-shadow: 0 0 8px rgba(251, 191, 36, 0.3);
 }
 
-.star.empty {
+.review-form .star.empty {
   color: #d1d5db;
 }
 
-.star:hover {
+.review-form .star:hover {
   transform: scale(1.1);
 }
 
-.star:disabled {
+.review-form .star:disabled {
   cursor: not-allowed;
   opacity: 0.6;
 }
@@ -208,7 +208,7 @@
   border-top: 1px solid #e5e7eb;
 }
 
-.btn {
+.review-form .btn {
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -221,30 +221,30 @@
   gap: 0.5rem;
 }
 
-.btn:disabled {
+.review-form .btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-.btn-primary {
+.review-form .btn-primary {
   background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
   color: white;
   border: 2px solid #1f2937;
 }
 
-.btn-primary:hover:not(:disabled) {
+.review-form .btn-primary:hover:not(:disabled) {
   background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(31, 41, 55, 0.3);
 }
 
-.btn-secondary {
+.review-form .btn-secondary {
   background: white;
   color: #6b7280;
   border: 2px solid #d1d5db;
 }
 
-.btn-secondary:hover:not(:disabled) {
+.review-form .btn-secondary:hover:not(:disabled) {
   background: #f9fafb;
   border-color: #9ca3af;
   color: #374151;
