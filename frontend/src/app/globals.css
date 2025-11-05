@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --bamboo-green: #7cb342;
+  --bamboo-light: #9ccc65;
+  --bamboo-dark: #689f38;
+  --dark-gray: #565555;
+  --light-gray: #777575;
+}
+
+.text-black {
+  color: var(--black)
+}
+
+.text-dark-gray {
+  color: var(--dark-gray)
+}
+
+.text-light-gray {
+  color: var(--light-gray)
+}
+
+.underline {
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 0.25rem 0;
+}
+
+.underline:hover {
+  color: var(--bamboo-green);
+  transform: translateX(5px);
+}
+
+.underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--bamboo-green);
+  transition: width 0.3s ease;
+  border-radius: 1px;
+}
+
+.underline:hover::after {
+  width: 100%;
+}
+
+.background {
+    background: 
+    radial-gradient(circle at 20% 80%, rgba(124, 179, 66, 0.08) 0%, transparent 60%),
+    radial-gradient(circle at 80% 20%, rgba(26, 26, 26, 0.05) 0%, transparent 60%),
+    linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+}
