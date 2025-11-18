@@ -1,10 +1,7 @@
-'use client'
 import { Category } from '@/types/schemas/category';
 import GreenBtn from '../buttons/GreenBtn';
 import HorizontalLayout from '../layouts/HorizontalLayout';
 import VerticalLayout from '../layouts/VerticalLayout';
-
-
 
 
 const CategoryFilter = ({
