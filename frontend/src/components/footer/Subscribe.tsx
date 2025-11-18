@@ -22,8 +22,7 @@ const Subscribe = () => {
     />
     <BlackBtn type="submit">
       <HorizontalLayout>
-        <p>Subscribe</p>
-        <span className="btn-emoji">📬</span>
+        Subscribe 📬
       </HorizontalLayout>
     </BlackBtn>
   </HorizontalLayout>

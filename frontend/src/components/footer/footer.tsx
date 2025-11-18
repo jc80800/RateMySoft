@@ -104,7 +104,7 @@ const Footer: React.FC = () => {
                 <FlexibleLayout className=' rounded-2xl p-7  border-2 justify-between items-center'>
                     <VerticalLayout>
                         <h3 className="text-2xl">Stay Updated with Fufu! 🐼</h3>
-                        <p className="text-light-gray wrap-break-word whitespace-normal">Get the latest software reviews and recommendations delivered href your inbox.</p>
+                        <p>Get the latest software reviews and recommendations delivered href your inbox.</p>
                     </VerticalLayout>
                     <Subscribe />
                 </FlexibleLayout>
