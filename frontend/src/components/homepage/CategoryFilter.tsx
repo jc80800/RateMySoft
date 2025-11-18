@@ -1,22 +1,13 @@
-import { FC } from 'react';
+'use client'
+import { Category } from '@/types/schemas/category';
+import GreenBtn from '../buttons/GreenBtn';
+import HorizontalLayout from '../layouts/HorizontalLayout';
+import VerticalLayout from '../layouts/VerticalLayout';
 
-interface Category {
-  id: string;
-  name: string;
-  icon: string;
-  description?: string;
-}
 
-interface CategoryFilterProps {
-  onCategorySelect: (id: string) => void;
-  selectedCategory: string;
-  categories?: Category[];
-}
 
-const CategoryFilter: FC<CategoryFilterProps> = ({
-  onCategorySelect,
-  selectedCategory,
-  categories = [],
+
+const CategoryFilter = ({
 }) => {
   const defaultCategories: Category[] = [
     {
@@ -27,28 +18,26 @@ const CategoryFilter: FC<CategoryFilterProps> = ({
     },
   ];
 
-  const allCategories = [...defaultCategories, ...categories];
+  const allCategories : Category[] = [...defaultCategories]; //TODO : populate
 
   return (
-    <div>
-      <div>
+    <VerticalLayout className='items-center my-8'>
+      <VerticalLayout className='items-center'>
         <h2>Browse by Category</h2>
         <p>Find software solutions that fit your needs</p>
-      </div>
+      </VerticalLayout>
 
-      <div>
-        {allCategories.map((category) => (
-          <button
-            key={category.id}
-            onClick={() => onCategorySelect(category.id)}
-            title={category.description}
-          >
-            <span>{category.icon}</span>
-            <span>{category.name}</span>
-          </button>
+      <HorizontalLayout>
+        {allCategories.map((category: Category, idx) => (
+          <GreenBtn key={idx}>
+            <HorizontalLayout >
+              <span>{category.icon}</span>
+              <span>{category.name}</span>
+            </HorizontalLayout>
+          </GreenBtn>
         ))}
-      </div>
-    </div>
+      </HorizontalLayout>
+    </VerticalLayout>
   );
 };
 

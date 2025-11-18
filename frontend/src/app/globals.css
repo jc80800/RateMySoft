@@ -54,3 +54,18 @@
     radial-gradient(circle at 80% 20%, rgba(26, 26, 26, 0.05) 0%, transparent 60%),
     linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
 }
+
+h1 {
+  font-size: 2.25rem; /* ~36px */
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 1.75rem; /* ~28px */
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.25rem; /* ~20px */
+  font-weight: 500;
+}
