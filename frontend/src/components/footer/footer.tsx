@@ -3,7 +3,6 @@ import VerticalLayout from '../layouts/VerticalLayout';
 import HorizontalLayout from '../layouts/HorizontalLayout';
 import Image from 'next/image'
 import Link from 'next/link';
-import "./footer.css"
 import Subscribe from './Subscribe';
 import FlexibleLayout from '../layouts/FlexibleLayout';
 
@@ -16,9 +15,9 @@ const Footer: React.FC = () => {
                     <VerticalLayout>
                         <HorizontalLayout>
                             <Image src="/app-icon.png" alt="RateMySoft" width={60} height={60} />
-                            <span className=" text-3xl font-semibold">RateMySoft</span>
+                            <h1 className=" text-3xl font-semibold">RateMySoft</h1>
                         </HorizontalLayout>
-                        <p className="text-gray-600">
+                        <p>
                             Finding the perfect software solutions with Fufu's help! 🐼✨
                         </p>
                         <HorizontalLayout className='justify-start'>
@@ -57,10 +56,10 @@ const Footer: React.FC = () => {
                             <h3 >Explore</h3>
                             <ul>
                                 <VerticalLayout>
-                                    <li><Link className="underline" href="/software" >All Software</Link></li>
-                                    <li><Link className="underline" href="/categories" >Categories</Link></li>
-                                    <li><Link className="underline" href="/reviews" >Latest Reviews</Link></li>
-                                    <li><Link className="underline" href="/trending" >Trending</Link></li>
+                                    <li><p><Link className="underline" href="/software">All Software</Link></p></li>
+                                    <li><p><Link className="underline" href="/categories">Categories</Link></p></li>
+                                    <li><p><Link className="underline" href="/reviews">Latest Reviews</Link></p></li>
+                                    <li><p><Link className="underline" href="/trending">Trending</Link></p></li>
                                 </VerticalLayout>
                             </ul>
                         </VerticalLayout>
@@ -68,10 +67,10 @@ const Footer: React.FC = () => {
                             <h3 >Support</h3>
                             <ul>
                                 <VerticalLayout>
-                                    <li><Link className="underline" href="/help" >Help Center</Link></li>
-                                    <li><Link className="underline" href="/contact" >Contact Us</Link></li>
-                                    <li><Link className="underline" href="/faq" >FAQ</Link></li>
-                                    <li><Link className="underline" href="/bug-report" >Report Bug</Link></li>
+                                    <li><p><Link className="underline" href="/help">Help Center</Link></p></li>
+                                    <li><p><Link className="underline" href="/contact">Contact Us</Link></p></li>
+                                    <li><p><Link className="underline" href="/faq">FAQ</Link></p></li>
+                                    <li><p><Link className="underline" href="/bug-report">Report Bug</Link></p></li>
                                 </VerticalLayout>
                             </ul>
                         </VerticalLayout>
@@ -79,10 +78,10 @@ const Footer: React.FC = () => {
                             <h3 >Company</h3>
                             <ul >
                                 <VerticalLayout>
-                                    <li><Link className="underline" href="/about" >About Us</Link></li>
-                                    <li><Link className="underline" href="/careers" >Careers</Link></li>
-                                    <li><Link className="underline" href="/press" >Press</Link></li>
-                                    <li><Link className="underline" href="/partners" >Partners</Link></li>
+                                    <li><p><Link className="underline" href="/about">About Us</Link></p></li>
+                                    <li><p><Link className="underline" href="/careers">Careers</Link></p></li>
+                                    <li><p><Link className="underline" href="/press">Press</Link></p></li>
+                                    <li><p><Link className="underline" href="/partners">Partners</Link></p></li>
                                 </VerticalLayout>
                             </ul>
                         </VerticalLayout>
@@ -90,10 +89,10 @@ const Footer: React.FC = () => {
                             <h3 >Company</h3>
                             <ul >
                                 <VerticalLayout className='gap-1.5'>
-                                    <li><Link className="underline" href="/about" >About Us</Link></li>
-                                    <li><Link className="underline" href="/careers" >Careers</Link></li>
-                                    <li><Link className="underline" href="/press" >Press</Link></li>
-                                    <li><Link className="underline" href="/partners" >Partners</Link></li>
+                                    <li><p><Link className="underline" href="/about">About Us</Link></p></li>
+                                    <li><p><Link className="underline" href="/careers">Careers</Link></p></li>
+                                    <li><p><Link className="underline" href="/press">Press</Link></p></li>
+                                    <li><p><Link className="underline" href="/partners">Partners</Link></p></li>
                                 </VerticalLayout>
                             </ul>
                         </VerticalLayout>

@@ -19,7 +19,7 @@ const Navbar = async () => {
         <Link href="/">
           <HorizontalLayout>
             <Image className="hidden md:block"src="/app-icon.png" alt="RateMySoft" width={60} height={60} />
-            <span className=" text-3xl font-semibold">RateMySoft</span>
+            <h1>RateMySoft</h1>
           </HorizontalLayout>
         </Link>
 

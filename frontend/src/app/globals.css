@@ -69,3 +69,30 @@ h3 {
   font-size: 1.25rem; /* ~20px */
   font-weight: 500;
 }
+
+/* Paragraphs */
+p {
+  color: var(--light-gray);
+  font-weight: 400;
+}
+
+/* Highlight Text */
+.highlight {
+  background: linear-gradient(90deg, var(--bamboo-green), var(--bamboo-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 650;
+  text-decoration: underline 2px var(--bamboo-green);
+  text-underline-offset: 4px;
+}
+
+.highlight {
+  transition: all 0.3s ease;
+}
+
+.highlight:hover {
+  background: linear-gradient(90deg, var(--bamboo-light), var(--bamboo-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-decoration-color: var(--bamboo-light);
+}

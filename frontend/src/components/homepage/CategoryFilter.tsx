@@ -18,7 +18,7 @@ const CategoryFilter = ({
   const allCategories : Category[] = [...defaultCategories]; //TODO : populate
 
   return (
-    <VerticalLayout className='items-center my-8'>
+    <VerticalLayout className='items-center'>
       <VerticalLayout className='items-center'>
         <h2>Browse by Category</h2>
         <p>Find software solutions that fit your needs</p>
@@ -27,7 +27,8 @@ const CategoryFilter = ({
       <HorizontalLayout>
         {allCategories.map((category: Category, idx) => (
           <GreenBtn key={idx}>
-            <HorizontalLayout >
+            {/* TODO: onclick */}
+            <HorizontalLayout >  
               <span>{category.icon}</span>
               <span>{category.name}</span>
             </HorizontalLayout>

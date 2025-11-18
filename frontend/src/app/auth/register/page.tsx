@@ -94,7 +94,7 @@ export default function RegisterPage() {
       <footer className="mt-8 text-center pt-6 border-t-2 border-gray-200">
         <p className="text-gray-500 text-sm">
           Already have an account?{' '}
-          <a href="/auth/login" className="text-(--bamboo-green) font-semibold hover:text-black hover:underline">
+          <a href="/auth/login" className="highlight">
             Sign in here
           </a>
         </p>

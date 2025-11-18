@@ -68,7 +68,7 @@ export default function LoginPage() {
       <footer className="mt-8 text-center pt-6 border-t-2 border-var(--light-gray)">
         <p className="text-light-gray text-sm">
           Don’t have an account?{' '}
-          <a href="/auth/register" className="text-(--bamboo-green) font-semibold hover:text-black hover:underline">
+          <a href="/auth/register" className="highlight">
             Sign up
           </a>
         </p>
