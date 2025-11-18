@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { RegisterRequest } from '@/types/apis/user'
-import { RegisterResponseSchema } from '@/types/schemas'
+import { RegisterSuccessSchema, RegisterErrorSchema } from '@/types/schemas/user'
 
 // Proxy POST /api/auth/register to backend defined by BACKEND_URI
 export async function POST(req: Request) {
@@ -14,8 +14,7 @@ export async function POST(req: Request) {
   })
 
   const data = await res.json().catch(() => ({}))
-
-  const parsed = RegisterResponseSchema.safeParse(data)
+  const parsed = (res.ok ? RegisterSuccessSchema : RegisterErrorSchema).safeParse(data)
   if (!parsed.success) {
     console.error('Register response validation failed', parsed.error)
     return NextResponse.json({ error: 'Invalid response from upstream auth' }, { status: 502 })
@@ -23,4 +22,3 @@ export async function POST(req: Request) {
 
   return NextResponse.json(parsed.data, { status: res.status })
 }
-

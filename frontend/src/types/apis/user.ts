@@ -1,23 +1,13 @@
 // Central API request/response types used across client and server proxies
+// Prefer importing response DTOs from Zod schemas to avoid duplication.
+import type { UserDto, LoginSuccess, LoginError } from '@/types/schemas/user'
 
-export interface UserDto {
-  id: string
-  email: string
-  name?: string | null
-}
-
-export interface AuthRequest {
+export interface LoginRequest {
   email: string
   password: string
 }
 
-export interface AuthResponse {
-  user?: UserDto
-  token?: string
-  // backend may return a message or an error key
-  message?: string
-  error?: string
-}
+export type LoginResponse = LoginSuccess | LoginError
 
 export interface RegisterRequest {
   email: string
@@ -27,13 +17,13 @@ export interface RegisterRequest {
 
 export interface RegisterResponse {
   user?: UserDto
-  message?: string
+  detail?: string
   error?: string
 }
 
 export interface ApiError {
   error?: string
-  message?: string
+  detail?: string
 }
 
 export type ApiResponse<T> = T | ApiError
