@@ -2,11 +2,14 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { signIn } from 'next-auth/react'
 
 import Form from '@/components/Form'
 import TextInput from '@/components/TextInput'
 import BlackBtn from '@/components/buttons/BlackBtn'
+import { AuthResponse, LoginRequest } from '@/types/schemas/user'
+import { UserApi } from '@/apis/userApi'
+import { useAuth } from '@/contexts/authContext'
+import { ApiErrorResponse } from '@/types/schemas/shared'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -16,32 +19,8 @@ export default function LoginPage() {
 
   const router = useRouter()
   const searchParams = useSearchParams()
-
-  // Get the intended destination from navigation state or sessionStorage, default to home
-  const getRedirectUrl = () => {
-    // First check sessionStorage for pendingReview
-    if (typeof window !== 'undefined') {
-      const pendingReview = sessionStorage.getItem('pendingReview')
-      if (pendingReview) {
-        try {
-          const parsed = JSON.parse(pendingReview)
-          if (parsed?.redirectUrl) {
-            return parsed.redirectUrl
-          }
-        } catch (e) {
-          // ignore parse errors
-          // eslint-disable-next-line no-console
-          console.error('Failed to parse pendingReview:', e)
-        }
-      }
-    }
-
-    // Fallback to URL search param `from`
-    const fromParam = searchParams?.get('from')
-    return fromParam || '/'
-  }
-
-  const from = getRedirectUrl()
+  const next = searchParams.get('next') || '/'
+  const {login} = useAuth();
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
@@ -49,40 +28,28 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      const result: any = await signIn('credentials', {
-        redirect: false,
-        // provider expects `email` as defined in credentials
-        email,
-        password,
-      })
-
-      // next-auth returns an object with `error` when sign-in fails
-      if (result && result.error) {
-        setError(result.error || 'Failed to sign in')
-      } else {
-        // Clear pendingReview from sessionStorage if it exists
-        if (typeof window !== 'undefined' && sessionStorage.getItem('pendingReview')) {
-          sessionStorage.removeItem('pendingReview')
-        }
-
-        // Redirect to the intended destination or home page
-        router.replace(from)
-      }
+      const loginReq: LoginRequest = {email, password}
+      const authRes: AuthResponse = await UserApi.login(loginReq);
+      login(authRes);
+      router.replace(next)
     } catch (err: any) {
-      setError(err?.message || 'An unexpected error occurred')
+      const error: ApiErrorResponse = err;
+      setError(error.error || 'An unexpected error occurred')
+    } finally{
+      setLoading(false)      
     }
-
-    setLoading(false)
   }
 
   return (
-    <Form title="Welcome Back!" description="Sign in to continue" onSubmit={handleSubmit}>
+    <Form title="Welcome Back!" description="Sign in to continue" onSubmit={handleSubmit} error={error}>
+
         <TextInput
           inputType="email"
           labelText="Email"
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          isRequired={true}
         />
 
         <TextInput
@@ -91,9 +58,8 @@ export default function LoginPage() {
           placeholder="••••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          isRequired={true}
         />
-
-        {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <BlackBtn type="submit">
           {loading ? 'Signing in...' : 'Sign In'}

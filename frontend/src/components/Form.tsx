@@ -1,6 +1,7 @@
 
 import React from "react"
-import VerticalLayout from "./VerticalLayout"
+import VerticalLayout from "./layouts/VerticalLayout"
+import ErrorMsg from "./msgs/ErrorMsg"
 
 interface FormProps {
   children: React.ReactNode
@@ -20,8 +21,9 @@ const Form: React.FC<FormProps> = ({ children, title, description, onSubmit, err
           <h1 className="text-3xl font-extrabold text-black mb-2 tracking-tight">{title}</h1>
           <p className="text-gray-500 text-sm">{description}</p>
         </header>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        
         <VerticalLayout>
+            {error && error.length > 0 && <ErrorMsg>{error}</ErrorMsg>}
             {children}
         </VerticalLayout>
       </div>

@@ -22,7 +22,6 @@
 
 .underline {
   text-decoration: none;
-  font-size: 0.95rem;
   transition: all 0.3s ease;
   position: relative;
   padding: 0.25rem 0;

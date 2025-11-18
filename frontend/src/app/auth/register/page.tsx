@@ -1,10 +1,12 @@
 "use client"
 
 import { useState } from 'react'
-
 import Form from '@/components/Form'
 import TextInput from '@/components/TextInput'
 import BlackBtn from '@/components/buttons/BlackBtn'
+import { AuthResponse, RegisterRequest } from '@/types/schemas/user'
+import { UserApi } from '@/apis/userApi'
+import { useAuth } from '@/contexts/authContext'
 
 export default function RegisterPage() {
   const [handle, setHandle] = useState('')
@@ -13,40 +15,35 @@ export default function RegisterPage() {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
-
-  
+  const {login} = useAuth();
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
-    e?.preventDefault()
+    if (e) e.preventDefault()
     setError('')
     setLoading(true)
+    if(email.length == 0 || password.length == 0 || handle.length == 0){
+      setError("All fileds are required")
+      setLoading(false)
+      return
+    }
 
-    try {
-  
-  
-        if (password !== confirmPassword) {
-          setError('Passwords do not match')
-          setLoading(false)
-          return
-        }
-  
-          const res = await fetch('/api/auth/login', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({email, password, handle})
-            })
-  
-        // parse the JSON response body
-        const data = await res.json()
-  
-        if (!res.ok) {
-          setError(data?.error || 'Failed to sign up')
-        } 
-      } catch (err: any) {
-        setError(err?.message || 'An unexpected error occurred')
-      }
-    setLoading(false)
+    if (password !== confirmPassword) {
+      setError('Passwords do not match')
+      setLoading(false)
+      return
+    }
+
+    const request : RegisterRequest = {email, password, handle};
+
+    try{
+      const registerRes : AuthResponse = await UserApi.register(request);
+      login(registerRes);
+    } catch (err: any) {
+      console.error(err)
+      setError(err?.message || 'An unexpected error occurred')
+    } finally{
+      setLoading(false)
+    }
   }
 
   return (
@@ -58,6 +55,7 @@ export default function RegisterPage() {
           placeholder="you@example.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          isRequired={true}
         />
 
         <TextInput
@@ -66,6 +64,7 @@ export default function RegisterPage() {
           placeholder="Choose a unique username"
           value={handle}
           onChange={(e) => setHandle(e.target.value)}
+          isRequired={true}
         />
 
         <TextInput
@@ -74,6 +73,7 @@ export default function RegisterPage() {
           placeholder="••••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          isRequired={true}
         />
 
         <TextInput
@@ -82,12 +82,13 @@ export default function RegisterPage() {
           placeholder="Re-enter your password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          isRequired={true}
         />
 
         
 
         <BlackBtn type="submit">
-          {loading ? 'Creating account...' : 'Creating account'}
+          {loading ? 'Creating account...' : 'Create Account'}
         </BlackBtn>
 
       <footer className="mt-8 text-center pt-6 border-t-2 border-gray-200">

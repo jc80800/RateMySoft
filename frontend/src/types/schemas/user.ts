@@ -1,42 +1,35 @@
 import { z } from 'zod'
+import { ApiErrorSchema } from './shared'
 
-export const UserDtoSchema = z.object({
-  id: z.string(),
+
+export const LoginRequestSchema = z.object({
   email: z.string(),
-  name: z.string().nullable().optional(),
+  password: z.string()
 })
 
-// Login (success) and (error) response shapes
-export const LoginSuccessSchema = z.object({
-  user: UserDtoSchema,
+export const RegisterRequestSchema = z.object({
+  handle: z.string(),
+  email: z.string(),
+  password: z.string()
+})
+
+export const UserDOSchema = z.object({
+  id: z.string(),
+  email: z.string(),
+  handle: z.string(),
+  role: z.enum(['user', 'admin']),
+})
+
+export const ProfileResponseSchema = UserDOSchema;
+
+export const AuthSchema = z.object({
+  user: UserDOSchema,
   token: z.string(),
 })
 
-export const LoginErrorSchema = z.object({
-  message: z.string().optional(),
-  detail: z.string().optional(),
-  error: z.string().optional(),
-}).refine((v) => Boolean(v.message || v.detail || v.error), {
-  message: 'Login error must include message or error',
-})
+export type AuthResponse = z.infer<typeof AuthSchema>
+export type ProfileResponse = z.infer<typeof ProfileResponseSchema>
+export type LoginRequest = z.infer<typeof LoginRequestSchema>
+export type RegisterRequest = z.infer<typeof RegisterRequestSchema>
+export type UserDO = z.infer<typeof UserDOSchema>
 
-export type UserDto = z.infer<typeof UserDtoSchema>
-export type LoginSuccess = z.infer<typeof LoginSuccessSchema>
-export type LoginError = z.infer<typeof LoginErrorSchema>
-
-// Register (success) and (error) response shapes
-export const RegisterSuccessSchema = z.object({
-  user: UserDtoSchema.optional(),
-  message: z.string().optional(),
-})
-
-export const RegisterErrorSchema = z.object({
-  error: z.string().optional(),
-  message: z.string().optional(),
-  detail: z.string().optional(),
-}).refine((v) => Boolean(v.message || v.error || v.detail), {
-  message: 'Register error must include message or error',
-})
-
-export type RegisterSuccess = z.infer<typeof RegisterSuccessSchema>
-export type RegisterError = z.infer<typeof RegisterErrorSchema>

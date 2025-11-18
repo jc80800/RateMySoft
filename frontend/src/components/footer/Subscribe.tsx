@@ -1,7 +1,7 @@
 'use client'
 import { useState } from "react"
 import BlackBtn from "../buttons/BlackBtn"
-import HorizontalLayout from "../HorizontalLayout"
+import HorizontalLayout from "../layouts/HorizontalLayout"
 import TextInput from "../TextInput"
 
 
@@ -12,13 +12,13 @@ const Subscribe = () => {
     }
 
     return (
-<form className="flex-1 w-full">
-  <HorizontalLayout className="w-full gap-4">
+<form>
+  <HorizontalLayout>
     <TextInput
       inputType="text"
       placeholder="Enter your email address"
       onChange={(e) => setEmail(e.target.value)}
-      className="flex-1 w-full"
+      className=" min-w-16 md:min-w-xs "
     />
     <BlackBtn type="submit">
       <HorizontalLayout>

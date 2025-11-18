@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server'
-import type { AuthRequest } from '@/types/apis/user'
-import { AuthResponseSchema } from '@/types/schemas'
+import { AuthSchema, LoginRequest } from '@/types/schemas/user'
+import { ApiErrorSchema } from '@/types/schemas/shared'
 
 // Proxy POST /api/auth/login to backend defined by BACKEND_URI
 export async function POST(req: Request) {
-  const body = (await req.json()) as AuthRequest
+  const body = (await req.json()) as LoginRequest
   const backend = process.env.BACKEND_URI
 
   const res = await fetch(`${backend}/auth/login`, {
@@ -15,7 +15,8 @@ export async function POST(req: Request) {
 
   const data = await res.json().catch(() => ({}))
 
-  const parsed = AuthResponseSchema.safeParse(data)
+  const schema = res.ok ? AuthSchema : ApiErrorSchema
+  const parsed = schema.safeParse(data)
   if (!parsed.success) {
     console.error('Auth response validation failed', parsed.error)
     return NextResponse.json({ error: 'Invalid response from upstream auth' }, { status: 502 })

@@ -1,19 +1,10 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import LoginLogout from './LoginLogout'
-import HorizontalLayout from '../HorizontalLayout'
+import HorizontalLayout from '../layouts/HorizontalLayout'
 
 
-const Navbar = async ({ session }: { session?: import("next-auth").Session | null }) => {
-
-  const navBaseClasses = [
-    "group",
-    "pb-1",
-    "text-black",
-    "transition-colors",
-    "duration-150",
-    "underline",
-  ].join(" ")
+const Navbar = async () => {
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -24,25 +15,25 @@ const Navbar = async ({ session }: { session?: import("next-auth").Session | nul
 
   return (
     <header>
-      <HorizontalLayout className="p-1 gap-4 justify-around border-b-2 px-20">
+      <HorizontalLayout className="p-1 justify-around border-b-2 px-5 md:px-20">
         <Link href="/">
           <HorizontalLayout>
-            <Image src="/app-icon.png" alt="RateMySoft" width={60} height={60} />
+            <Image className="hidden md:block"src="/app-icon.png" alt="RateMySoft" width={60} height={60} />
             <span className=" text-3xl font-semibold">RateMySoft</span>
           </HorizontalLayout>
         </Link>
 
         <nav>
-          <HorizontalLayout>
+          <HorizontalLayout className='gap-12'>
             {navLinks.map(({ href, label }) => (
-              <Link key={href} href={href} className={navBaseClasses}>
+              <Link key={href} href={href} className="group pb-1 text-(--dark-gray) text-xl font-semibold transition-colors duration-150 underline">
                 {label}
               </Link>
             ))}
           </HorizontalLayout>
         </nav>
 
-        <LoginLogout initialSession={session ?? undefined} />
+        <LoginLogout/>
       </HorizontalLayout>
     </header>
   )

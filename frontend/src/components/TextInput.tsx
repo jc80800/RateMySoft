@@ -1,4 +1,5 @@
 import React from 'react'
+import { boolean } from 'zod'
 
 interface TextInputProps {
   labelText?: string
@@ -7,6 +8,7 @@ interface TextInputProps {
   value?: string 
   onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
   className?: string
+  isRequired?: boolean
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -15,7 +17,8 @@ const TextInput: React.FC<TextInputProps> = ({
   placeholder,
   value,
   onChange,
-  className
+  className,
+  isRequired = false
 }) => {
   return (
     <div className={`flex flex-col gap-2 ${className ? className : ''}`}>
@@ -30,6 +33,7 @@ const TextInput: React.FC<TextInputProps> = ({
       ) : (
         <input
           type={inputType}
+          required={isRequired}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

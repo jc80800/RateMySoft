@@ -1,8 +1,9 @@
 import React from 'react'
+import WhiteBtn from '../buttons/WhiteBtn'
 
 const LoggedIn = () => {
   return (
-    <div>LoggedIn</div>
+    <WhiteBtn>Logout</WhiteBtn>
   )
 }
 
