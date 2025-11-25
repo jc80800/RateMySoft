@@ -12,10 +12,10 @@ const Hero: FC = () => {
             Find the Perfect{' '} <br/>
             <span className="highlight">Software</span> Solution
           </h1>
-          <p>
+          <p className="text-(--light-gray)">
             Discover, compare, and review the best software tools for developers and teams. Get honest reviews from real users.
           </p>
-          <HorizontalLayout className='w-full'>
+          <HorizontalLayout>
             <BlackBtn>
               Browse Software
             </BlackBtn>
@@ -24,10 +24,17 @@ const Hero: FC = () => {
             </WhiteBtn>
           </HorizontalLayout>
         </VerticalLayout>
-        <div className="relative mt-16 flex justify-center gap-6">
-          <div className="w-16 h-16 bg-green-200 rounded-full animate-bounce"></div>
-          <div className="w-20 h-20 bg-green-300 rounded-full animate-pulse"></div>
-          <div className="w-12 h-12 bg-green-100 rounded-full animate-bounce"></div>
+        <div className="hero-visual" style={{ position: 'relative', width: '360px', height: '360px' }}>
+          <div className="panda-wrapper" style={{ position: 'relative', width: '360px', height: '360px' }}>
+            <div className="panda-circle" style={{ position: 'absolute', top: '50%', left: '50%', width: '100px', height: '100px', marginTop: '-50px', marginLeft: '-50px', borderRadius: '50%', backgroundColor: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>
+              <span className="panda">
+                🐼
+              </span>
+            </div>
+            <div className="floating-icon bamboo">🎋</div>
+            <div className="floating-icon star">⭐</div>
+            <div className="floating-icon heart">💚</div>
+          </div>
         </div>
       </HorizontalLayout>
   )

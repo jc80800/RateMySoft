@@ -1,0 +1,79 @@
+.hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 450px;
+}
+
+.panda-wrapper {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panda-circle {
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  background: transparent;
+  box-shadow: 0 0 40px rgba(124, 179, 66, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panda {
+  font-size: 7rem;
+  display: block;
+  text-align: center;
+}
+
+.floating-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(200, 230, 180, 0.4);
+  border: 2px solid #7cb342;
+  transform-origin: -180px center;
+}
+
+.floating-icon.bamboo {
+  animation: orbitBamboo 10s linear infinite;
+}
+
+.floating-icon.star {
+  animation: orbitStar 10s linear infinite;
+  animation-delay: 3.33s;
+}
+
+.floating-icon.heart {
+  animation: orbitHeart 10s linear infinite;
+  animation-delay: 6.66s;
+}
+
+@keyframes orbitBamboo {
+  from { transform: rotate(0deg) translateX(180px) rotate(0deg); }
+  to { transform: rotate(360deg) translateX(180px) rotate(-360deg); }
+}
+
+@keyframes orbitStar {
+  from { transform: rotate(120deg) translateX(180px) rotate(-120deg); }
+  to { transform: rotate(480deg) translateX(180px) rotate(-480deg); }
+}
+
+@keyframes orbitHeart {
+  from { transform: rotate(240deg) translateX(180px) rotate(-240deg); }
+  to { transform: rotate(600deg) translateX(180px) rotate(-600deg); }
+}
