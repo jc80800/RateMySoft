@@ -20,7 +20,7 @@ const GreenBtn: React.FC<ButtonProps> = ({
   // Navigation case (SSR-safe)
   if (href) {
     return (
-      <Link href={href} onClick={onClick} className={baseClasses}>
+      <Link href={href} className={baseClasses}>
         <span className="absolute top-0 left-[-100%] w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-all duration-500 hover:left-full" />
         <span className="relative z-10">{children}</span>
       </Link>
