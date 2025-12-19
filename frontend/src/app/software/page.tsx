@@ -40,7 +40,7 @@ const SoftwarePage = async ({searchParams} : SoftwarePageProps)=> {
       page,
     })
 
-  const availableCategories = await SoftwareApi.getAvailbelCategories()
+  const availableCategories : string[] = await SoftwareApi.getCategories()
 
   return (
     <VerticalLayout className="items-center">

@@ -4,10 +4,8 @@ export const SoftwareSchema = z.object({
   id: z.string(),
   company_id: z.string(),
   name: z.string(),
-  slug: z.string(),
   category: z.string(),
-  short_tagline: z.string(),
-  description: z.string(),
+  description: z.string().optional(),
   total_reviews: z.number(),
   avg_rating: z.number()
 })

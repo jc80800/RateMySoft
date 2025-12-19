@@ -31,11 +31,23 @@ export class SoftwareApi {
       { mode: 'isr', revalidate: 60 }
     )
 
-    if (!res.ok) {
-      throw new Error(HYGIENED_ERROR_MSG)
+    const data = await res.json().catch(() => null)
+
+    if (!res.ok) { 
+      console.error("Failed to get softwares: ", data.error);
+      throw new Error(data)
     }
 
-    const data = await res.json()
-    return data.products
+    return data.products as Software[];
+  }
+
+  static async getCategories() : Promise<string[]> {
+    const res = await serverFetch("/api/products/categories");
+    const data = await res.json().catch(() => null)
+    if (!res.ok) {
+      console.error("Failed to get softwares: ", data.error);
+      return[];
+    }
+    return data.categories;
   }
 }

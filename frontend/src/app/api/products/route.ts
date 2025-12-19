@@ -14,7 +14,7 @@ export async function GET(req: Request) {
 
     // forward query params to backend
     const backendUrl =
-      `${process.env.BACKEND_URI}/api/v1/products?${url.searchParams.toString()}`
+      `${process.env.BACKEND_URI}/products?${url.searchParams.toString()}`
 
     const res = await fetch(backendUrl)
     const json = await res.json().catch(() => null)
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
     if (!parsed.success) {
       console.error('Schema validation failed', parsed.error)
       return NextResponse.json(
-        { error: HYGIENED_ERROR_MSG },
+        { error: "Schema validation failed for ProductResposnseSchema" },
         { status: 502 }
       )
     }
