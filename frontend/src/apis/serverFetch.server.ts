@@ -1,3 +1,5 @@
+"use server"
+
 import { cookies } from 'next/headers'
 
 export type CacheMode =
@@ -12,7 +14,7 @@ export async function serverFetch(
 ) {
   const jwt = (await cookies()).get('authToken')?.value
 
-  const fetchUrl = `${process.env.BACKEND_URI}${endpoint}`
+  const url = process.env.NEXT_PUBLIC_SITE_URL
 
   const fetchOptions: RequestInit & { next?: NextFetchRequestConfig } = {
     ...options,
@@ -36,5 +38,5 @@ export async function serverFetch(
       break
   }
 
-  return fetch(fetchUrl, fetchOptions)
+  return fetch(url + endpoint, fetchOptions)
 }

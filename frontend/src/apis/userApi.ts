@@ -41,7 +41,7 @@ export class UserApi {
   }
 
   static async getProfile() {
-    const res = await fetch('/auth/profile', {
+    const res = await fetch('/api/auth/profile', {
       method: 'GET',
     });
 
