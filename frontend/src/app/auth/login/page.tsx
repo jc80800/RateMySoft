@@ -9,8 +9,8 @@ import BlackBtn from '@/components/buttons/BlackBtn'
 import { AuthResponse, LoginRequest } from '@/types/schemas/user'
 import { UserApi } from '@/apis/userApi'
 import { useAuth } from '@/contexts/authContext'
-import { UNKNOWN_ERROR_MSG } from '@/types/schemas/shared'
-import { UserLoginFailedError } from '@/types/errors/user'
+import { ClientSideError } from '@/types/errors/error'
+import { HYGIENED_ERROR_MSG } from '@/types/constants/constants'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -34,10 +34,10 @@ export default function LoginPage() {
       login(authRes);
       router.replace(next)
     } catch (err) {
-      if (err instanceof UserLoginFailedError) {
+      if (err instanceof ClientSideError) {
         setError(err.message)
       } else {
-        setError(UNKNOWN_ERROR_MSG)
+        setError(HYGIENED_ERROR_MSG)
       }
     } finally {
       setLoading(false)

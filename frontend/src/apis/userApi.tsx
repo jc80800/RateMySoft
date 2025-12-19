@@ -1,4 +1,4 @@
-import { UserLoginFailedError } from "@/types/errors/user";
+import { ClientSideError } from "@/types/errors/error";
 import { ApiErrorResponse } from "@/types/schemas/shared";
 import {
   LoginRequest,
@@ -18,7 +18,7 @@ export class UserApi {
     });
     if(!res.ok){
       const json = await res.json() as ApiErrorResponse;
-      throw new UserLoginFailedError(json.error)
+      throw new ClientSideError(json.error)
     }
     const json = await res.json() as AuthResponse;
     return json;
@@ -33,7 +33,7 @@ export class UserApi {
 
     if(!res.ok){
       const json = await res.json() as ApiErrorResponse;
-      throw new Error(json.error)
+      throw new ClientSideError(json.error)
     }
 
     const json = await res.json() as AuthResponse;

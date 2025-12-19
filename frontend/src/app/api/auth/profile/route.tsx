@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server'
 import { AuthSchema, ProfileResponseSchema, RegisterRequest } from '@/types/schemas/user'
 import { ApiErrorSchema } from '@/types/schemas/shared'
+import { HYGIENED_ERROR_MSG } from '@/types/constants/constants'
 
 // Proxy POST /api/auth/register to backend defined by BACKEND_URI
 export async function GET(req: Request) {
@@ -19,7 +20,7 @@ export async function GET(req: Request) {
   const parsed = schema.safeParse(data)
   if (!parsed.success) {
     console.error('Auth response Schema parsed failed', parsed.error)
-    return NextResponse.json({ error: 'Invalid response from upstream auth' }, { status: 502 })
+    return NextResponse.json({ error: HYGIENED_ERROR_MSG }, { status: 502 })
   }
 
   return NextResponse.json(parsed.data, { status: res.status })

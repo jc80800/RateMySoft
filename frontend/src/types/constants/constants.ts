@@ -1,0 +1,1 @@
+export const HYGIENED_ERROR_MSG = "Unexpected error! Please try again later..."
