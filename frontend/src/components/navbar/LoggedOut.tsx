@@ -9,8 +9,8 @@ const LoggedOut = () => {
 
   return (
     <HorizontalLayout className="text-nowrap">
-      <WhiteBtn onClick={() => router.push('/auth/login')}>Sign In</WhiteBtn>
-      <BlackBtn onClick={() => router.push('/auth/register')}>Sign Up</BlackBtn>
+      <BlackBtn onClick={() => router.push('/auth/login')}>Sign In</BlackBtn>
+      <WhiteBtn onClick={() => router.push('/auth/register')}>Sign Up</WhiteBtn>
     </HorizontalLayout>
 
   )
