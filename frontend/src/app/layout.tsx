@@ -16,7 +16,7 @@ export default async function RootLayout({
       <body>
         <Providers>
           <Navbar />
-            <div className="py-24">
+            <div className="py-24 bg-[#f4f7f5]">
               {children}
             </div>
           <Footer/>

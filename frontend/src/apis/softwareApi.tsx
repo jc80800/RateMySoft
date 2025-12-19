@@ -2,17 +2,17 @@ import { Software } from "@/types/schemas/software/software"
 import { SoftwareSortType } from "@/types/schemas/software/softwareSortType"
 import { serverFetch } from "./serverFetch"
 
-interface GetProductsProps{
-    category : string | undefined,
-    sortType : SoftwareSortType
-    search : string | undefined
-    page : number
+interface GetProductsProps {
+  category: string | undefined,
+  sortType: SoftwareSortType
+  search: string | undefined
+  page: number
 }
 
 
 export class SoftwareApi {
 
-  static getSoftwares = async({category, sortType, search, page} : GetProductsProps) : Promise<Software[]> => {
+  static getSoftwares = async ({ category, sortType, search, page }: GetProductsProps): Promise<Software[]> => {
     const params = new URLSearchParams()
 
     params.set('sortType', sortType)
@@ -22,10 +22,11 @@ export class SoftwareApi {
 
     params.set('page', '1')
 
-    const res = await serverFetch(`/products?${params.toString()}`, {
-      cache: 'force-cache',
-      next: { revalidate: 60 },
-    })
+    const res = await serverFetch(
+      `/products?${params.toString()}`,
+      {},
+      { mode: 'isr', revalidate: 60 }
+    )
 
     if (!res.ok) {
       throw new Error('Failed to fetch products')
@@ -35,7 +36,7 @@ export class SoftwareApi {
     return data.products
   }
 
-  static getAvailbelCategories = async() : Promise<string[]> => {
+  static getAvailbelCategories = async (): Promise<string[]> => {
     // TODO: fetch from API
     // const res = await serverFetch(`/products/availble-categories`, {
     //   cache: 'force-cache',

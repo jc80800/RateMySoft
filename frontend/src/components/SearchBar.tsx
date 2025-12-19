@@ -65,7 +65,7 @@ const SearchBar = ({
 
           <button
             type="submit"
-            className="bg-(--bamboo-dark) text-white p-2 hover:bg-blue-400 cursor-pointer mx-0.5 rounded-full"
+            className="bg-(--bamboo-dark) text-white p-2 hover:bg-(--bamboo-light) cursor-pointer mx-0.5 rounded-full"
           >
             {icon}
           </button>

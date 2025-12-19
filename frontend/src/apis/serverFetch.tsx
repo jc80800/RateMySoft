@@ -1,41 +1,40 @@
 import { cookies } from 'next/headers'
 
+export type CacheMode =
+  | { mode: 'dynamic' }
+  | { mode: 'static' }
+  | { mode: 'isr'; revalidate: number }
 
-/**
- * serverFetch
- *
- * Server-only fetch helper for authenticated backend requests.
- *
- * How auth works:
- * 1. JWT is stored in an HttpOnly cookie (`authToken`)
- * 2. Browser automatically sends the cookie to Next.js
- * 3. This function reads the cookie on the SERVER
- * 4. JWT is forwarded to backend as `Authorization: Bearer <jwt>`
- *
- * IMPORTANT:
- * - Client code never sees or handles the JWT
- * - This must only be used in Server Components / Route Handlers
- */
 export async function serverFetch(
   endpoint: string,
   options: RequestInit = {},
-  cacheConfig?: { cache?: RequestCache; revalidate?: number }
+  cacheMode: CacheMode = { mode: 'dynamic' }
 ) {
   const jwt = (await cookies()).get('authToken')?.value
 
   const fetchUrl = `${process.env.BACKEND_URI}${endpoint}`
 
-  const res = await fetch(fetchUrl, {
+  const fetchOptions: RequestInit & { next?: NextFetchRequestConfig } = {
     ...options,
-    cache: cacheConfig?.cache ?? 'no-store',
-    ...(cacheConfig?.revalidate !== undefined
-      ? { next: { revalidate: cacheConfig.revalidate } }
-      : {}),
     headers: {
       ...(options.headers || {}),
       ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
     },
-  })
+  }
 
-  return res
+  switch (cacheMode.mode) {
+    case 'dynamic':
+      fetchOptions.cache = 'no-store'
+      break
+
+    case 'static':
+      fetchOptions.cache = 'force-cache'
+      break
+
+    case 'isr':
+      fetchOptions.next = { revalidate: cacheMode.revalidate }
+      break
+  }
+
+  return fetch(fetchUrl, fetchOptions)
 }
