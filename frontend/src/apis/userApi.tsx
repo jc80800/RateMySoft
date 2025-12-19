@@ -1,32 +1,57 @@
-import { AuthResponse, LoginRequest, RegisterRequest, UserDO } from "@/types/schemas/user";
+import { UserLoginFailedError } from "@/types/errors/user";
+import { ApiErrorResponse } from "@/types/schemas/shared";
+import {
+  LoginRequest,
+  RegisterRequest,
+  AuthResponse,
+  UserDO,
+} from "@/types/schemas/user";
 
 export class UserApi {
 
-
-
-
   // Auth endpoints
-  static async login(loginRequest : LoginRequest): Promise<AuthResponse> {
-    const data = await fetchHelper('/auth/login', {
+  static async login(loginRequest: LoginRequest) {
+    const res = await fetch('/api/auth/login', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(loginRequest),
     });
-    return data;
+    if(!res.ok){
+      const json = await res.json() as ApiErrorResponse;
+      throw new UserLoginFailedError(json.error)
+    }
+    const json = await res.json() as AuthResponse;
+    return json;
   }
 
-  static async register(registerRequest : RegisterRequest): Promise<AuthResponse> {
-    const data = await fetchHelper('/api/auth/register', {
+  static async register(registerRequest: RegisterRequest) {
+    const res = await fetch('/api/auth/register', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(registerRequest),
     });
-    return data;
+
+    if(!res.ok){
+      const json = await res.json() as ApiErrorResponse;
+      throw new Error(json.error)
+    }
+
+    const json = await res.json() as AuthResponse;
+    return json;
   }
 
-  static async getProfile(): Promise<UserDO> {
-    const data = await fetchHelper('/auth/profile', {
+  static async getProfile() {
+    const res = await fetch('/auth/profile', {
       method: 'GET',
     });
-    return data;
+
+    if(!res.ok){
+      const json = await res.json() as ApiErrorResponse;
+      throw new Error(json.error)
+    }
+
+    const json = await res.json() as UserDO;
+    return json;
   }
 
 }

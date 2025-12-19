@@ -9,7 +9,8 @@ import BlackBtn from '@/components/buttons/BlackBtn'
 import { AuthResponse, LoginRequest } from '@/types/schemas/user'
 import { UserApi } from '@/apis/userApi'
 import { useAuth } from '@/contexts/authContext'
-import { ApiErrorResponse } from '@/types/schemas/shared'
+import { UNKNOWN_ERROR_MSG } from '@/types/schemas/shared'
+import { UserLoginFailedError } from '@/types/errors/user'
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -20,7 +21,7 @@ export default function LoginPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const next = searchParams.get('next') || '/'
-  const {login} = useAuth();
+  const { login } = useAuth();
 
   const handleSubmit = async (e?: React.FormEvent<HTMLFormElement>) => {
     e?.preventDefault()
@@ -28,45 +29,48 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
-      const loginReq: LoginRequest = {email, password}
+      const loginReq: LoginRequest = { email, password }
       const authRes: AuthResponse = await UserApi.login(loginReq);
       login(authRes);
       router.replace(next)
-    } catch (err: any) {
-      const error: ApiErrorResponse = err;
-      setError(error.error || 'An unexpected error occurred')
-    } finally{
-      setLoading(false)      
+    } catch (err) {
+      if (err instanceof UserLoginFailedError) {
+        setError(err.message)
+      } else {
+        setError(UNKNOWN_ERROR_MSG)
+      }
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <Form title="Welcome Back!" description="Sign in to continue" onSubmit={handleSubmit} error={error}>
 
-        <TextInput
-          inputType="email"
-          labelText="Email"
-          placeholder="you@example.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          isRequired={true}
-        />
+      <TextInput
+        inputType="email"
+        labelText="Email"
+        placeholder="you@example.com"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        isRequired={true}
+      />
 
-        <TextInput
-          inputType="password"
-          labelText="Password"
-          placeholder="••••••••"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          isRequired={true}
-        />
+      <TextInput
+        inputType="password"
+        labelText="Password"
+        placeholder="••••••••"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        isRequired={true}
+      />
 
-        <BlackBtn type="submit">
-          {loading ? 'Signing in...' : 'Sign In'}
-        </BlackBtn>
+      <BlackBtn type="submit">
+        {loading ? 'Signing in...' : 'Sign In'}
+      </BlackBtn>
 
       <footer className="mt-8 text-center pt-6 border-t-2 border-var(--light-gray)">
-        <p className="text-light-gray text-sm">
+        <p className="text-(--light-gray)">
           Don’t have an account?{' '}
           <a href="/auth/register" className="highlight">
             Sign up

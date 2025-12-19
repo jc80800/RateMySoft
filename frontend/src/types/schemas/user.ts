@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { ApiErrorSchema } from './shared'
 
 
 export const LoginRequestSchema = z.object({
