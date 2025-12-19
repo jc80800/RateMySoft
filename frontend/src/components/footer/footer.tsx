@@ -86,13 +86,13 @@ const Footer: React.FC = () => {
                             </ul>
                         </VerticalLayout>
                         <VerticalLayout>
-                            <h3 >Company</h3>
+                            <h3 >Community</h3>
                             <ul >
-                                <VerticalLayout className='gap-1.5'>
-                                    <li><p><Link className="underline" href="/about">About Us</Link></p></li>
-                                    <li><p><Link className="underline" href="/careers">Careers</Link></p></li>
-                                    <li><p><Link className="underline" href="/press">Press</Link></p></li>
-                                    <li><p><Link className="underline" href="/partners">Partners</Link></p></li>
+                                <VerticalLayout>
+                                    <li><p><Link className="underline" href="/write-a-reivew">Write a Review</Link></p></li>
+                                    <li><p><Link className="underline" href="/community-guidlines">Community Guidelines</Link></p></li>
+                                    <li><p><Link className="underline" href="/discussions">Discussions</Link></p></li>
+                                    <li><p><Link className="underline" href="/events">Events</Link></p></li>
                                 </VerticalLayout>
                             </ul>
                         </VerticalLayout>
