@@ -1,4 +1,5 @@
 import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface VerticalLayoutProps {
   children: React.ReactNode
@@ -7,7 +8,7 @@ interface VerticalLayoutProps {
 
 const VerticalLayout: React.FC<VerticalLayoutProps> = ({ children, className }) => {
   return (
-    <div className={`flex flex-col gap-5 ${className || ''}`}>
+    <div className={twMerge('flex flex-col gap-5', className)}>
       {children}
     </div>
   )

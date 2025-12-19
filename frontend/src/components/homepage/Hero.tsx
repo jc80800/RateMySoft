@@ -6,7 +6,7 @@ import VerticalLayout from '../layouts/VerticalLayout'
 
 const Hero: FC = () => {
   return (
-      <HorizontalLayout className='border-t-2 '>
+      <HorizontalLayout>
         <VerticalLayout>
           <h1 >
             Find the Perfect{' '} <br/>

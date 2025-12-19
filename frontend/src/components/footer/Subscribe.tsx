@@ -8,7 +8,7 @@ import TextInput from "../TextInput"
 const Subscribe = () => {
     const [email, setEmail] = useState("");
     const onSubmit = () => {
-
+      //TODO: submit subscribe
     }
 
     return (

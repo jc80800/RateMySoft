@@ -35,6 +35,5 @@ export function middleware(req: Request) {
 }
 
 export const config = {
-  matcher: PROTECTED_MATCHER,
+  matcher: ['/protected/:path*'],
 }
-

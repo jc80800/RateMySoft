@@ -1,4 +1,4 @@
-import React from 'react'
+import { twMerge } from 'tailwind-merge'
 
 interface HorizontalLayoutProps {
   children: React.ReactNode
@@ -11,7 +11,7 @@ const HorizontalLayout: React.FC<HorizontalLayoutProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-row items-center gap-4 ${className ?? ''}`}
+      className={twMerge("flex flex-row items-center gap-4",className)}
     >
       {children}
     </div>

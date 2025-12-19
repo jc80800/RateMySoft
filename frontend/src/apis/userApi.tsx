@@ -1,5 +1,4 @@
 import { AuthResponse, LoginRequest, RegisterRequest, UserDO } from "@/types/schemas/user";
-import { fetchHelper } from "./fetchHelper";
 
 export class UserApi {
 
